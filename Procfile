@@ -1,1 +1,1 @@
-web: java -jar build/libs/eKommers-all.jar --server.port=$PORT
+web: java -jar build/libs/tea-shop.jar --server.port=$PORT
