@@ -1,0 +1,1 @@
+web: java -jar build/libs/eKommers-all.jar --server.port=$PORT

@@ -1,0 +1,14 @@
+spring:
+  data:
+    rest:
+      base-path: /api
+    mongodb:
+      host: localhost
+  security:
+    user:
+      name: user
+      password: password
+  webflux:
+    static-path-pattern: /**
+server:
+  port: 8080

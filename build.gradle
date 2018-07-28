@@ -1,0 +1,73 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.51"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.2.51"
+    id "org.jetbrains.kotlin.plugin.jpa" version "1.2.51"
+    id "org.jetbrains.kotlin.kapt" version "1.2.51"
+    id 'org.springframework.boot' version '2.0.3.RELEASE'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+def javaVersion = JavaVersion.VERSION_1_8
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+    dependencies {
+        dependency "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${ext['kotlin.version']}"
+        dependency "org.jetbrains.kotlin:kotlin-reflect:${ext['kotlin.version']}"
+        dependency "org.jetbrains:annotations:16.0.2"
+        dependency "com.fasterxml.jackson.core:jackson-annotations:2.9.6"
+    }
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-webflux"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive"
+    compile "org.springframework.boot:spring-boot-starter-integration"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin"
+    compile('ch.qos.logback:logback-classic')
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "io.projectreactor:reactor-test"
+
+}
+
+springBoot {
+    mainClassName = "de.maltsev.lavita.teashop.TeaShopApplicationKt"
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = javaVersion.toString()
+        // javaParameters = true
+    }
+}
+
+jar.enabled = false
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
