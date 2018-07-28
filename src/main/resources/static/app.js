@@ -15,7 +15,7 @@ function setConnected(connected) {
 }
 
 function connect() {
-    socket = new WebSocket("wss://lavitatea.herokuapp.com/socket");
+    socket = new WebSocket("wss://lavitatea-api.herokuapp.com/socket");
     socket.onopen = (msg) => {
         setConnected(msg);
       console.log("connected:"+msg);
