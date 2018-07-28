@@ -2,8 +2,6 @@ spring:
   data:
     rest:
       base-path: /api
-    mongodb:
-      host: localhost
   security:
     user:
       name: user
